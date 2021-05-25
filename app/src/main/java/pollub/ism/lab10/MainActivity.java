@@ -10,6 +10,7 @@ import pollub.ism.lab10.databinding.ActivityMainBinding;
 public class MainActivity extends AppCompatActivity {
 
     private ActivityMainBinding okno = null;
+    private ZadanieAsynchroniczne2 zadanie2 = null;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -26,18 +27,25 @@ public class MainActivity extends AppCompatActivity {
 
 
     public void przycisk1(View view) {
-
+        new ZadanieAsynchroniczne1(okno.poleTekstowe1).execute();
+        okno.poleTekstowe1.setText(R.string.working);
     }
 
     public void przycisk2(View view) {
-
+        new ZadanieAsynchroniczne1(okno.poleTekstowe2).execute();
+        okno.poleTekstowe2.setText(R.string.working);
     }
 
     public void przycisk3(View view) {
-
+        okno.przycisk3.setEnabled(false);
+        int powtorzenia = Integer.valueOf(okno.poleEdycyjne1.getText().toString());
+        int pauza = Integer.valueOf(okno.poleEdycyjne2.getText().toString());
+        zadanie2 = new ZadanieAsynchroniczne2(okno.pasekPostepu, okno.przycisk3, okno.przycisk4);
+        zadanie2.execute(powtorzenia,pauza);
+        okno.przycisk4.setEnabled(true);
     }
 
     public void przycisk4(View view) {
-
+        zadanie2.cancel(true);
     }
 }
